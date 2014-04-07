@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ipdays: 1
+  active: false
+  phpvisits: 1
+  dropreason_id: 1
+  otherdetail: MyString
+
+two:
+  ipdays: 1
+  active: false
+  phpvisits: 1
+  dropreason_id: 1
+  otherdetail: MyString

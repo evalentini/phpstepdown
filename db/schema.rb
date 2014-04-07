@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140407173126) do
+ActiveRecord::Schema.define(:version => 20140407174132) do
+
+  create_table "discharges", :force => true do |t|
+    t.integer  "ipdays"
+    t.boolean  "active"
+    t.integer  "phpvisits"
+    t.integer  "dropreason_id"
+    t.string   "otherdetail"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "dropreasons", :force => true do |t|
     t.string   "name"

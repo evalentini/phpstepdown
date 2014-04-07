@@ -1,4 +1,4 @@
-<%- model_class = Dropreason -%>
+<%- model_class = Discharge -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
@@ -6,22 +6,30 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:ipdays) %></th>
+      <th><%= model_class.human_attribute_name(:active) %></th>
+      <th><%= model_class.human_attribute_name(:phpvisits) %></th>
+      <th><%= model_class.human_attribute_name(:dropreason_id) %></th>
+      <th><%= model_class.human_attribute_name(:otherdetail) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% @dropreasons.each do |dropreason| %>
+    <% @discharges.each do |discharge| %>
       <tr>
-        <td><%= link_to dropreason.id, dropreason_path(dropreason) %></td>
-        <td><%= dropreason.name %></td>
-        <td><%=l dropreason.created_at %></td>
+        <td><%= link_to discharge.id, discharge_path(discharge) %></td>
+        <td><%= discharge.ipdays %></td>
+        <td><%= discharge.active %></td>
+        <td><%= discharge.phpvisits %></td>
+        <td><%= discharge.dropreason_id %></td>
+        <td><%= discharge.otherdetail %></td>
+        <td><%=l discharge.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_dropreason_path(dropreason), :class => 'btn btn-default btn-xs' %>
+                      edit_discharge_path(discharge), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      dropreason_path(dropreason),
+                      discharge_path(discharge),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-xs btn-danger' %>
@@ -32,5 +40,5 @@
 </table>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
-            new_dropreason_path,
+            new_discharge_path,
             :class => 'btn btn-primary' %>
