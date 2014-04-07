@@ -15,3 +15,7 @@
 .hidden {
 	visibility:hidden ;
 }
+
+.dropdown-menu > li > a {
+             text-align:left;
+}

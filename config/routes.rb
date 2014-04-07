@@ -1,5 +1,8 @@
 Phpstepdown::Application.routes.draw do
   
+  resources :locations
+
+
   match '/sessions/gate' => "sessions#gate", :as => 'gate'
   match '/sessions/destroy' => "sessions#destroy", :as => 'logout'
 

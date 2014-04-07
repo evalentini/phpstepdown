@@ -40,7 +40,20 @@
 			<div class="btn-group">
 				<a class="btn btn-default" href="#">Open IP Discharges</a>
 				<a class="btn btn-default" href="#">Reports</a>
-				<a class="btn btn-default" href="/pages/homework">Admin Tools</a>
+				<% if session[:usertype]=="admin" %>
+								
+				  <div class="btn-group">
+				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				      Admin Tools
+				      <span class="caret"></span>
+				    </button>
+				    <ul class="dropdown-menu">
+				      <li><%= link_to "Edit Facility List", :controller=>"locations", :action=>"index" %></li>
+				      <li><a href="#">Edit Dropout Reason List</a></li>
+				    </ul>
+				  </div>				
+				
+				<% end %>
 				<% if session[:accesscode] %>
 					<% if session[:usertype]=="admin" %>
 						<a class="btn btn-success" href="/sessions/destroy">Logout: Administator </a>
