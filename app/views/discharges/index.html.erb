@@ -11,6 +11,7 @@
       <th><%= model_class.human_attribute_name(:phpvisits) %></th>
       <th><%= model_class.human_attribute_name(:dropreason_id) %></th>
       <th><%= model_class.human_attribute_name(:otherdetail) %></th>
+      <th><%= model_class.human_attribute_name(:facility_id) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -24,6 +25,7 @@
         <td><%= discharge.phpvisits %></td>
         <td><%= discharge.dropreason_id %></td>
         <td><%= discharge.otherdetail %></td>
+        <td><%= discharge.facility_id %></td>
         <td><%=l discharge.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

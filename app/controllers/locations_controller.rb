@@ -62,7 +62,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.save
-        format.html { redirect_to @location, notice: 'Location was successfully created.' }
+        format.html { redirect_to :controller => "locations", :action => "index"  }
         format.json { render json: @location, status: :created, location: @location }
       else
         format.html { render action: "new" }
@@ -78,7 +78,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.update_attributes(params[:location])
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
+        format.html { redirect_to :controller => "locations", :action => "index" }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -86,16 +86,30 @@ class LocationsController < ApplicationController
       end
     end
   end
+  
+  def hide
+    @location = Location.find(params[:id])
+    @location.update_attributes(:ishidden=>true)
+    redirect_to :controller => "locations", :action => "index"
+  end
+  
+  def unhide
+    @location = Location.find(params[:id])
+    @location.update_attributes(:ishidden=>false)
+    redirect_to :controller => "locations", :action => "index"
+  end
 
   # DELETE /locations/1
   # DELETE /locations/1.json
+  #should not be able to destroy locations, only hide them from view
   def destroy
-    @location = Location.find(params[:id])
-    @location.destroy
-
-    respond_to do |format|
-      format.html { redirect_to locations_url }
-      format.json { head :no_content }
-    end
+#    @location = Location.find(params[:id])
+#    @location.update_attributes(:ishidden => true)
+#
+#    respond_to do |format|
+#      format.html { redirect_to locations_url }
+#      format.json { head :no_content }
+#    end
+    
   end
 end

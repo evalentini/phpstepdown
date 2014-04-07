@@ -6,6 +6,8 @@
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @location.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:ishidden) %>:</strong></dt>
+  <dd><%= @location.ishidden %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

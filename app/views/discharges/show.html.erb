@@ -14,6 +14,8 @@
   <dd><%= @discharge.dropreason_id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:otherdetail) %>:</strong></dt>
   <dd><%= @discharge.otherdetail %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:facility_id) %>:</strong></dt>
+  <dd><%= @discharge.facility_id %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

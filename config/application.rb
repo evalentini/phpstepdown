@@ -2,6 +2,16 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+class String
+  def convert_to_yn
+    me=self.to_s
+    me="Yes" if self.to_s=="true"
+    me="No" unless self.to_s=="true"
+    return me
+  end  
+end 
+
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))

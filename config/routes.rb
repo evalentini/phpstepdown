@@ -5,6 +5,9 @@ Phpstepdown::Application.routes.draw do
 
   match '/sessions/gate' => "sessions#gate", :as => 'gate'
   match '/sessions/destroy' => "sessions#destroy", :as => 'logout'
+  match '/locations/hide/:id' => "locations#hide", :as => 'hide_location'
+  match '/locations/unhide/:id' => "locations#unhide", :as => 'unhide_location'
+  
 
   resources :discharges
 
