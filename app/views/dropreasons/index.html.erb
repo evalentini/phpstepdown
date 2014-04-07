@@ -1,0 +1,23 @@
+<h1>Listing dropreasons</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dropreasons.each do |dropreason| %>
+  <tr>
+    <td><%= dropreason.name %></td>
+    <td><%= link_to 'Show', dropreason %></td>
+    <td><%= link_to 'Edit', edit_dropreason_path(dropreason) %></td>
+    <td><%= link_to 'Destroy', dropreason, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dropreason', new_dropreason_path %>
