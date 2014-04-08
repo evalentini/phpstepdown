@@ -2,17 +2,17 @@ Phpstepdown::Application.routes.draw do
   
   resources :locations
 
-
-  match '/sessions/gate' => "sessions#gate", :as => 'gate'
-  match '/sessions/destroy' => "sessions#destroy", :as => 'logout'
-  match '/locations/hide/:id' => "locations#hide", :as => 'hide_location'
-  match '/locations/unhide/:id' => "locations#unhide", :as => 'unhide_location'
+  match '/sessions/gate', to: 'sessions#gate', via: [:get, :post], as: 'gate'
+  get '/sessions/destroy' => "sessions#destroy", :as => 'logout'
   
-  match '/dropreasons/hide/:id' => "dropreasons#hide", :as => 'hide_dropreason'
-  match '/dropreasons/unhide/:id' => "dropreasons#unhide", :as => 'unhide_dropreason'
+  get '/locations/hide/:id' => "locations#hide", :as => 'hide_location'
+  get '/locations/unhide/:id' => "locations#unhide", :as => 'unhide_location'
   
-  match '/discharges/hide/:id' => "discharges#hide", :as => 'hide_discharge'
-  match '/discharges/unhide/:id' => "discharges#unhide", :as => 'unhide_discharge'
+  get '/dropreasons/hide/:id' => "dropreasons#hide", :as => 'hide_dropreason'
+  get '/dropreasons/unhide/:id' => "dropreasons#unhide", :as => 'unhide_dropreason'
+  
+  get '/discharges/hide/:id' => "discharges#hide", :as => 'hide_discharge'
+  get '/discharges/unhide/:id' => "discharges#unhide", :as => 'unhide_discharge'
 
   resources :discharges
 
