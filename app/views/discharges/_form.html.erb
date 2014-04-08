@@ -1,44 +1,63 @@
 <%= form_for @discharge, :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="form-group">
-    <%= f.label :ipdays, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.number_field :ipdays, :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :active, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :active, :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :phpvisits, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.number_field :phpvisits, :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :dropreason_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.number_field :dropreason_id, :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :otherdetail, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :otherdetail, :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :facility_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.number_field :facility_id, :class => 'form-control' %>
-    </div>
-  </div>
 
+  <div class="form-group">
+    <label for="medikid" class="col-sm-4 control-label">Patient Medik ID</label>
+    <div class="col-sm-8">
+	 <%= f.text_field :medikid, :class => 'form-control' %>
+    </div>
+  </div>  
+
+
+  <div class="form-group">
+    <label for="ipdays" class="col-sm-4 control-label">Inpatient Days</label>
+    <div class="col-sm-8">
+	  <%= f.select(:ipdays, Discharge.ipDayOptions, {},  {:class => 'form-control', :id=>'ipdays'}) %>
+    </div>
+  </div>  
   
-  <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+  <div class="form-group">
+    <label class="col-sm-4 control-label">Inpatient Facility</label>
+    <div class="col-sm-3">
+		<%= f.select(:facility_id, Location.unhiddenLocations, {}, {:class=> 'form-control', :id=>'facility_id'})%>
+    </div>
+	<div class="col-sm-5"></div>
+  </div>
+  <div class="form-group">
+    <label for="active" class="col-sm-4 control-label">Still in PHP Program @ Springstone </label>
+    <div class="col-sm-3">
+      <%= f.select(:active, [['Yes', 'true'], ['No', 'false']], {},  {:class => 'form-control', :id=>'active'}) %>
+    </div>
+	<div class="col-sm-5"></div>
+  </div>
+  <div id="dropoffonlyinputs" class="hidden">
+	  <div class="form-group">
+	   <label for="phpvisits" class="col-sm-4 control-label">PHP Visits </label>
+	    <div class="col-sm-8">
+		  <%= f.select(:phpvisits, Discharge.phpVisitOptions, {},  {:class => 'form-control', :id=>'phpvisits'}) %>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="dropreason" class="col-sm-4 control-label">Reason For Declining/Leaving PHP</label>
+	    <div class="col-sm-8">
+	      <%= f.select(:dropreason_id, Dropreason.unhiddenReasons, {}, {:class=> 'form-control', :id=>'dropreason_id'})%>
+	    </div>
+	  </div>
+	  <div class="form-group hidden" id="otherdetailgroup">
+	    <label for="otherdetail" class="col-sm-4 control-label">Please Describe Reason: </label>
+	    <div class="col-sm-8">
+	      <%= f.text_field :otherdetail, :class => 'form-control' %>
+	    </div>
+	  </div>
+  </div>
+  
+  <div class="form-group">
+   <label for="phpvisits" class="col-sm-4 control-label"></label>
+    <div class="col-sm-8">
+      <%= f.submit nil, :class => 'btn btn-primary' %>   
+	  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
             discharges_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+  
  
 <% end %>

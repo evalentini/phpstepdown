@@ -8,6 +8,11 @@ Phpstepdown::Application.routes.draw do
   match '/locations/hide/:id' => "locations#hide", :as => 'hide_location'
   match '/locations/unhide/:id' => "locations#unhide", :as => 'unhide_location'
   
+  match '/dropreasons/hide/:id' => "dropreasons#hide", :as => 'hide_dropreason'
+  match '/dropreasons/unhide/:id' => "dropreasons#unhide", :as => 'unhide_dropreason'
+  
+  match '/discharges/hide/:id' => "discharges#hide", :as => 'hide_discharge'
+  match '/discharges/unhide/:id' => "discharges#unhide", :as => 'unhide_discharge'
 
   resources :discharges
 

@@ -1,14 +1,28 @@
 <%= form_for @dropreason, :html => { :class => 'form-horizontal' } do |f| %>
+
+
   <div class="form-group">
-    <%= f.label :name, :class => 'control-label' %>
-    <div class="controls">
+    <label for="name" class="col-sm-4 control-label">Reason Description</label>
+    <div class="col-sm-8">
       <%= f.text_field :name, :class => 'form-control' %>
     </div>
-  </div>
-
+  </div>  
   
-  <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            dropreasons_path, :class => 'btn btn-default' %>
+  <div class="form-group">
+	<label for="name" class="col-sm-4 control-label"></label>
+	<div class="col-sm-8">
+		 <input class="btn btn-primary" type="submit" value="Create" name="commit">
+	</div>
+  </div>
+  
+  <div class="form-group">
+	<label for="name" class="col-sm-4 control-label"></label>
+	<div class="col-sm-8">
+	     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+	               locations_path, :class => 'btn btn-default' %>
+	</div>
+  </div>
+ 
+
  
 <% end %>

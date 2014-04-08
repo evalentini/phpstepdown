@@ -44,7 +44,7 @@ class DropreasonsController < ApplicationController
 
     respond_to do |format|
       if @dropreason.save
-        format.html { redirect_to @dropreason, notice: 'Dropreason was successfully created.' }
+        format.html { redirect_to :action => "index" }
         format.json { render json: @dropreason, status: :created, location: @dropreason }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class DropreasonsController < ApplicationController
 
     respond_to do |format|
       if @dropreason.update_attributes(params[:dropreason])
-        format.html { redirect_to @dropreason, notice: 'Dropreason was successfully updated.' }
+        format.html { redirect_to :action => "index" }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -68,16 +68,29 @@ class DropreasonsController < ApplicationController
       end
     end
   end
+  
+  
+  def hide
+    @dropreason = Dropreason.find(params[:id])
+    @dropreason.update_attributes(:ishidden=>true)
+    redirect_to :controller => "dropreasons", :action => "index"
+  end
+  
+  def unhide
+    @dropreason = Dropreason.find(params[:id])
+    @dropreason.update_attributes(:ishidden=>false)
+    redirect_to :controller => "dropreasons", :action => "index"
+  end
 
   # DELETE /dropreasons/1
   # DELETE /dropreasons/1.json
   def destroy
-    @dropreason = Dropreason.find(params[:id])
-    @dropreason.destroy
-
-    respond_to do |format|
-      format.html { redirect_to dropreasons_url }
-      format.json { head :no_content }
-    end
+ #   @dropreason = Dropreason.find(params[:id])
+ #   @dropreason.destroy
+ #
+ #   respond_to do |format|
+ #     format.html { redirect_to dropreasons_url }
+ #    format.json { head :no_content }
+ #   end
   end
 end

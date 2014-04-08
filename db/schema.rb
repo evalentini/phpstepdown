@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140407210545) do
+ActiveRecord::Schema.define(:version => 20140408032921) do
 
   create_table "discharges", :force => true do |t|
     t.integer  "ipdays"
@@ -19,15 +19,20 @@ ActiveRecord::Schema.define(:version => 20140407210545) do
     t.integer  "phpvisits"
     t.integer  "dropreason_id"
     t.string   "otherdetail"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.integer  "facility_id"
+    t.string   "medikid"
+    t.boolean  "ishidden",         :default => false
+    t.date     "ipdischargedate"
+    t.date     "phpdischargedate"
   end
 
   create_table "dropreasons", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "ishidden",   :default => false
   end
 
   create_table "locations", :force => true do |t|
