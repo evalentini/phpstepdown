@@ -27,7 +27,9 @@
         <td>
 			<%= Location.find(discharge.facility_id).name %>
 		</td>
-        <td><%= discharge.created_at.strftime("%m-%d-%Y") %></td>
+        <td>
+			<%= discharge.modIpDischargeDate %>
+		</td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_discharge_path(discharge), :class => 'btn btn-default btn-xs' %>
@@ -66,7 +68,7 @@
     </tr>
   </thead>
   <tbody>
-    <% Discharge.where(active: false, ishidden: false).order("created_at desc").each do |discharge| %>
+    <% Discharge.where(active: false, ishidden: false).order("phpdischargedate desc").each do |discharge| %>
       <tr>
         <td><%= link_to discharge.id, discharge_path(discharge) %></td>
 		<td><%= discharge.medikid %></td>
@@ -76,7 +78,7 @@
         <td>
 			<%= Location.find(discharge.facility_id).name %>
 		</td>
-        <td><%= discharge.created_at.strftime("%m-%d-%Y") %></td>
+        <td><%= discharge.modPhpDischargeDate %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_discharge_path(discharge), :class => 'btn btn-default btn-xs' %>

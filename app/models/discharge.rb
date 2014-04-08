@@ -37,4 +37,19 @@ class Discharge < ActiveRecord::Base
       return elem[0] if elem[1]==codenum
     end
   end
+  
+  def modIpDischargeDate
+    modDate=self.ipdischargedate.strftime("%m-%d-%Y")
+    modDate="n/a-no IP treatment @ Springstone" if self.ipdays==0
+    modDate
+  end
+  
+  def modPhpDischargeDate
+    modDate=self.phpdischargedate.strftime("%m-%d-%Y")
+    modDate="n/a-no dropped out w/o starting PHP" if self.phpvisits==0
+    modDate
+  end
+  
+  
+  
 end

@@ -16,6 +16,13 @@
   </div>  
   
   <div class="form-group">
+    <label for="ipdischargedate" class="col-sm-4 control-label">IP Discharge Date</label>
+    <div class="col-sm-8">
+	  <%= f.date_select :ipdischargedate, {:order => [:month, :day, :year]}, {}   %>
+    </div>
+  </div>
+  
+  <div class="form-group">
     <label class="col-sm-4 control-label">Inpatient Facility</label>
     <div class="col-sm-3">
 		<%= f.select(:facility_id, Location.unhiddenLocations, {}, {:class=> 'form-control', :id=>'facility_id'})%>
@@ -39,7 +46,7 @@
 	  <div class="form-group">
 	   <label for="phpvisits" class="col-sm-4 control-label">PHP Drop Out Date </label>
 	    <div class="col-sm-8">
-		  <%= f.select_date(:phpdischargedate, :order => [:month, :day, :year])   %>
+		  <%= f.date_select :phpdischargedate, {:order => [:month, :day, :year]}, {}   %>
 	    </div>
 	  </div>
 	  <div class="form-group">
