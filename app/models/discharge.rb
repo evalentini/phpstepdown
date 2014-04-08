@@ -7,7 +7,8 @@ class Discharge < ActiveRecord::Base
   validates_uniqueness_of :medikid
   validates :ipdays, :numericality => {:only_integer => true}
   
-  attr_accessible :active, :dropreason_id, :ipdays, :otherdetail, :phpvisits, :facility_id, :medikid, :ishidden
+  attr_accessible :active, :dropreason_id, :ipdays, :otherdetail, :phpvisits, :facility_id, :medikid, :ishidden, 
+                  :ipdischargedate, :phpdischargedate
   
   def self.ipDayOptions
     ipDayOptionArray=[]
