@@ -1,42 +1,41 @@
 <%- model_class = Discharge -%>
 
-  <h1>Active PHP Patients</h1>
-  <div class="alert alert-success">The patients in the list below are still in our PHP program.  Please review this list daily and (1) fill out discharge information for any patients who have left PHP. (2) Add new information for any patients who have left IP treatment/started PHP treatment.  </div>
+
+  <h2>Active PHP Patients</h2>
+  <div class="alert alert-success">The patients in the list below are still in our PHP program.  Please review this list daily and (1) fill out discharge information for any patients who have left PHP. (2) Add new information for any patients who have started PHP treatment.  </div>
+  
   
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
 	  <th>Medik ID</th>
       <th>Inpatient Days</th>
-      <th># PHP Visits</th>
-      <th>Reason Dropped/Left PHP</th>
       <th>Facility </th>
-      <th bgcolor="yellow">IP Discharge Date</th>
+      <th>PHP Start Date</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% Discharge.where(active: true, ishidden: false).order("created_at desc").each do |discharge| %>
+    <% Discharge.activePatients(session[:locfilter]).each do |discharge| %>
+    <% #Discharge.where(active: true, ishidden: false).order("created_at desc").each do |discharge| %>
       <tr>
-        <td><%= link_to discharge.id, discharge_path(discharge) %></td>
 		<td><%= discharge.medikid %></td>
         <td><%= discharge.ipdays %></td>
-        <td>n/a-still active</td>
-        <td>n/a-still active</td>
         <td>
 			<%= Location.find(discharge.facility_id).name %>
 		</td>
         <td>
-			<%= discharge.modIpDischargeDate %>
+			<%= discharge.modPhpStartDate %>
 		</td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_discharge_path(discharge), :class => 'btn btn-default btn-xs' %>
 		  <% if discharge.ishidden==true %>
-		  	<%= link_to "Unhide", unhide_discharge_path(discharge.id), :class => 'btn btn-danger btn-xs'  %>
+		  	<%= link_to "Unhide", unhide_discharge_path(discharge.id), 
+			:id=>"noshading", :class => 'btn btn-danger btn-xs'  %>
 		  <% else %>
-		  	<%= link_to "Hide", hide_discharge_path(discharge.id), :class => 'btn btn-danger btn-xs'  %>
+		  	<%= link_to "Hide", hide_discharge_path(discharge.id), 
+			:id=> "noshading", :class => 'btn btn-danger btn-xs'  %>
 		  <% end %>
         </td>
       </tr>
@@ -44,33 +43,84 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_discharge_path,
-            :class => 'btn btn-success	' %>
+  <a id="noshading" class="btn btn-success" href="<%= new_discharge_path %>">Add New Patient</a>
 
 
-<h1>Discharged PHP Patients/IP Drop Outs</h1>
-  <div class="alert alert-success">The patients in the list below have left our PHP program or left our IP program without starting PHP.  Please review this list monthly for accuracy. </div>
+<br><br>
+
+<h2>IP Drop Outs</h2>
+
+  <div class="alert alert-success">
+	  The patients in the list below have left IP treatment without starting PHP at Springstone.  Please review this list monthly for accuracy.  
+  </div>
+  
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:id) %></th>
+  	  <th>Medik ID</th>
+        <th>IP Days</th>
+        <th>Reason Dropped</th>
+        <th>Facility </th>
+        <th>IP Discharge Date</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+  	  <% Discharge.droppedOutPatients(session[:locfilter]).each do |discharge| %>
+      <% #Discharge.where(active: false, ishidden: false).order("phpdischargedate desc").each do |discharge| %>
+        <tr>
+          <td><%= link_to discharge.id, discharge_path(discharge) %></td>
+  		<td><%= discharge.medikid %></td>
+          <td><%= discharge.ipdays %></td>
+          <td><%= Dropreason.find(discharge.dropreason_id).name %></td>
+          <td>
+  			<%= Location.find(discharge.facility_id).name %>
+  		</td>
+          <td><%= discharge.modIpDischargeDate %></td>
+          <td>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_discharge_path(discharge), :class => 'btn btn-default btn-xs' %>
+  		  <% if discharge.ishidden==true %>
+  		  	<%= link_to "Unhide", unhide_discharge_path(discharge.id), 
+  				:id=> "noshading", :class => 'btn btn-danger btn-xs'  %>
+  		  <% else %>
+  		  	<%= link_to "Hide", hide_discharge_path(discharge.id), 
+  			:id=>"noshading", :class => 'btn  btn-danger btn-xs'  %>
+  		  <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+  <a id="noshading" class="btn btn-success" href="<%= new_discharge_path %>">Add New Patient</a>
+
+
+<br><br>
+
+<h2>Discharged PHP Patients</h2>
+  <div class="alert alert-success">The patients in the list below have left our PHP program.  Please review this list monthly for accuracy. </div>
 
 
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
 	  <th>Medik ID</th>
-      <th>Inpatient Days</th>
+      <th>IP Days</th>
       <th># PHP Visits</th>
-      <th>Reason Dropped/Left PHP</th>
+      <th>Reason Left PHP</th>
       <th>Facility </th>
-      <th bgcolor="yellow">PHP Discharge Date</th>
+      <th>PHP Discharge Date</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% Discharge.where(active: false, ishidden: false).order("phpdischargedate desc").each do |discharge| %>
+	  <% Discharge.dischargedPatients(session[:locfilter]).each do |discharge| %>
+    <% #Discharge.where(active: false, ishidden: false).order("phpdischargedate desc").each do |discharge| %>
       <tr>
-        <td><%= link_to discharge.id, discharge_path(discharge) %></td>
 		<td><%= discharge.medikid %></td>
         <td><%= discharge.ipdays %></td>
         <td><%= Discharge.phpVisitCodeLookup(discharge.phpvisits) %></td>
@@ -83,9 +133,11 @@
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_discharge_path(discharge), :class => 'btn btn-default btn-xs' %>
 		  <% if discharge.ishidden==true %>
-		  	<%= link_to "Unhide", unhide_discharge_path(discharge.id), :class => 'btn btn-danger btn-xs'  %>
+		  	<%= link_to "Unhide", unhide_discharge_path(discharge.id), 
+				:id=> "noshading", :class => 'btn btn-danger btn-xs'  %>
 		  <% else %>
-		  	<%= link_to "Hide", hide_discharge_path(discharge.id), :class => 'btn btn-danger btn-xs'  %>
+		  	<%= link_to "Hide", hide_discharge_path(discharge.id), 
+			:id=>"noshading", :class => 'btn  btn-danger btn-xs'  %>
 		  <% end %>
         </td>
       </tr>
@@ -93,7 +145,8 @@
   </tbody>
 </table>
 
-<h1>Hidden Patients</h1>
+<br><br>
+<h2>Hidden Patients</h2>
   <div class="alert alert-success">The patients in the list below were hidden/dropped from the active or discharge lists above.  These hidden patients will not show up in any reporting.  Click the unhide button to restore any of these patients to the active or discharged lists. </div>
 
 
@@ -107,7 +160,7 @@
       <th># PHP Visits</th>
       <th>Reason Dropped/Left PHP</th>
       <th>Facility </th>
-      <th bgcolor="yellow">Discharge Dates (IP/PHP)</th>
+      <th>Date Created</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>

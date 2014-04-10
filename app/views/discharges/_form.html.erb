@@ -10,22 +10,30 @@
 
   <div class="form-group">
     <label for="ipdays" class="col-sm-4 control-label">Inpatient Days</label>
-    <div class="col-sm-8">
+    <div class="col-sm-3">
 	  <%= f.select(:ipdays, Discharge.ipDayOptions, {},  {:class => 'form-control', :id=>'ipdays'}) %>
     </div>
+	<div class="col-sm-5"></div>
   </div>  
   
-  <div class="form-group">
+  <div class="form-group hidden" id="ipdateformgroup">
     <label for="ipdischargedate" class="col-sm-4 control-label">IP Discharge Date</label>
     <div class="col-sm-8">
 	  <%= f.date_select :ipdischargedate, {:order => [:month, :day, :year]}, {}   %>
     </div>
   </div>
   
+  <div class="form-group hidden" id="phpstartdateformgroup">
+    <label for="phpstartdate" class="col-sm-4 control-label">PHP Start Date</label>
+    <div class="col-sm-8">
+	  <%= f.date_select :phpstartdate, {:order => [:month, :day, :year]}, {}   %>
+    </div>
+  </div>
+  
   <div class="form-group">
     <label class="col-sm-4 control-label">Inpatient Facility</label>
     <div class="col-sm-3">
-		<%= f.select(:facility_id, Location.unhiddenLocations, {}, {:class=> 'form-control', :id=>'facility_id'})%>
+		<%= f.select(:facility_id, Location.unhiddenLocations(session[:locfilter]), {}, {:class=> 'form-control', :id=>'facility_id'})%>
     </div>
 	<div class="col-sm-5"></div>
   </div>
@@ -43,8 +51,8 @@
 		  <%= f.select(:phpvisits, Discharge.phpVisitOptions, {},  {:class => 'form-control', :id=>'phpvisits'}) %>
 	    </div>
 	  </div>
-	  <div class="form-group">
-	   <label for="phpvisits" class="col-sm-4 control-label">PHP Drop Out Date </label>
+	  <div class="form-group hidden" id="phpenddateformgroup">
+	   <label for="phpdropdate" class="col-sm-4 control-label">PHP Drop Out Date </label>
 	    <div class="col-sm-8">
 		  <%= f.date_select :phpdischargedate, {:order => [:month, :day, :year]}, {}   %>
 	    </div>
@@ -66,7 +74,7 @@
   <div class="form-group">
    <label for="phpvisits" class="col-sm-4 control-label"></label>
     <div class="col-sm-8">
-      <%= f.submit nil, :class => 'btn btn-primary' %>   
+      <button class="btn btn-primary">Save Patient</button>
 	  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
             discharges_path, :class => 'btn btn-default' %>
     </div>

@@ -8,7 +8,7 @@ class Discharge < ActiveRecord::Base
   validates :ipdays, :numericality => {:only_integer => true}
   
   attr_accessible :active, :dropreason_id, :ipdays, :otherdetail, :phpvisits, :facility_id, :medikid, :ishidden, 
-                  :ipdischargedate, :phpdischargedate
+                  :ipdischargedate, :phpdischargedate, :phpstartdate
   
   def self.ipDayOptions
     ipDayOptionArray=[]
@@ -38,18 +38,45 @@ class Discharge < ActiveRecord::Base
     end
   end
   
+  def self.locFilterWhere(locfilter=-999)
+    if locfilter==-999
+      return "facility_id is not null"
+    else
+      return "facility_id=#{locfilter}"
+    end
+  end
+  
+  
+  def self.activePatients(locfilter=-999)
+    Discharge.where(active: true, ishidden: false).where(Discharge.locFilterWhere(locfilter)).order("phpstartdate desc")
+  end
+  
+  def self.droppedOutPatients(locfilter=-999)
+    Discharge.where(active: false, ishidden: false, phpvisits: 0).where(Discharge.locFilterWhere(locfilter)).order("ipdischargedate desc")
+  end
+  
+  def self.dischargedPatients(locfilter=-999)
+    Discharge.where("active='f' and ishidden='f' and phpvisits>0").where(Discharge.locFilterWhere(locfilter)).order("phpdischargedate desc")
+  end
+  
   def modIpDischargeDate
-    modDate=self.ipdischargedate.strftime("%m-%d-%Y")
-    modDate="n/a-no IP treatment @ Springstone" if self.ipdays==0
+    modDate=self.ipdischargedate.strftime("%m-%d-%Y") unless self.ipdischargedate.nil?
+    modDate="n/a" if self.ipdays==0 || self.ipdischargedate.nil?
     modDate
   end
+
+  def modPhpStartDate
+    modDate=self.phpstartdate.strftime("%m-%d-%Y") unless self.phpstartdate.nil?
+    modDate="n/a" if self.phpstartdate.nil?
+    modDate
+  end
+
   
   def modPhpDischargeDate
     modDate=self.phpdischargedate.strftime("%m-%d-%Y")
     modDate="n/a-no dropped out w/o starting PHP" if self.phpvisits==0
     modDate
   end
-  
   
   
 end

@@ -19,3 +19,5 @@
 .dropdown-menu > li > a {
              text-align:left;
 }
+
+a:visited#noshading {color: white;}

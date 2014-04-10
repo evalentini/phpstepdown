@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
       session[:accesscode]=params[:accesscode]
       session[:adminpassword]=params[:adminpassword]
       session[:usertype]=params[:usertype]
+      session[:locfilter]=params[:locfilter].to_i
       if Digest::SHA2.hexdigest(params[:accesscode].to_s)==ENV['GATE_PASS_HASH'].to_s
         #check admin password if necessary 
         if params[:usertype]=="admin" && Digest::SHA2.hexdigest(params[:adminpassword].to_s)!=ENV['ADMIN_PASS_HASH'].to_s
