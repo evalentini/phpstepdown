@@ -3,6 +3,11 @@ Phpstepdown::Application.routes.draw do
   resources :locations
 
   match '/sessions/gate', to: 'sessions#gate', via: [:get, :post], as: 'gate'
+  
+  match '/reasonsbyfacilityreport', to: 'discharges#reasonsbyfacilityreport', via: [:get, :post]
+  match '/datadumpreport', to: 'discharges#datadumpreport', via: [:get, :post]
+  match '/mordata', to: 'discharges#mordata', via: [:get, :post]
+  
   get '/sessions/destroy' => "sessions#destroy", :as => 'logout'
   
   get '/locations/hide/:id' => "locations#hide", :as => 'hide_location'

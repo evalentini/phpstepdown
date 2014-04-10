@@ -23,4 +23,8 @@ class Location < ActiveRecord::Base
     end
   end
   
+  def self.orderedUnhiddenLocations
+    Location.where(ishidden: false).order("name asc")
+  end
+  
 end

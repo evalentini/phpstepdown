@@ -1,0 +1,55 @@
+<div class="row">
+
+	<div class="col-xs-1"></div>
+	<div class="col-xs-10">
+		<div class="well">
+			<form class="form-inline" role="form">
+				<%= token_tag(nil) %>
+				<div class="form-group">
+					<label for="yrmonth">Report Period ==> </label>
+					<%= select_tag(:yrmonth,
+						 			createOptList(Discharge.reportingPeriods, @period).html_safe,
+									{:class=>"form-control"} ) %>
+				</div>
+				<div class="form-group">
+					<label for="patienttype">&nbsp &nbsp Patient Type ==> </label> 
+					<%= select_tag(:patienttype, 
+									createOptList({"Left before starting PHP"=>"dropouts",
+												   "Left after starting PHP"=>"discharges"}, params[:patienttype]
+												  ).html_safe,
+									{:class=>"form-control"}) %>
+				</div>
+				<button class="btn btn-default" type="submit">Get Report</button>
+			</form>
+		</div>
+		<table class="table table-bordered">
+			<tr>
+				<td></td>
+				<% Dropreason.orderedUnhiddenReasons.each do |reason| %>
+				<td>
+					<%= reason.name %>
+				</td>
+				<% end %>
+			</tr>
+			<tr>
+				<td>Total</td>
+				<% Dropreason.orderedUnhiddenReasons.each do |reason| %>
+					<td>
+						<%= Discharge.reasonCount(reason.id, nil, @period, @pattype) %>
+					</td>
+				<% end %>
+			</tr>
+			<% Location.orderedUnhiddenLocations.each do |location| %>
+				<tr>
+					<td><%= location.name %></td>
+					<% Dropreason.orderedUnhiddenReasons.each do |reason| %>
+						<td bgcolor="<%= Discharge.extValIndex(reason.id, location.id,@period, @pattype) %>">
+							<%= Discharge.reasonCount(reason.id, location.id, @period, @pattype) %>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+	<div class="col-xs-1"></div>
+</div>

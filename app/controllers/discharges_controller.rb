@@ -82,6 +82,18 @@ class DischargesController < ApplicationController
     @discharge.update_attributes(:ishidden=>false)
     redirect_to :action => "index"
   end
+  
+  def reasonsbyfacilityreport
+    @period=Date.today.strftime("%m-%Y") 
+    @period=params[:yrmonth] unless params[:yrmonth].nil?
+    @pattype=params[:patienttype]
+  end
+  
+  def mordata
+  end
+  
+  def datadumpreport
+  end
 
   # DELETE /discharges/1
   # DELETE /discharges/1.json

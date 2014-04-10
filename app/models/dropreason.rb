@@ -12,4 +12,8 @@ class Dropreason < ActiveRecord::Base
     reasonList
   end
   
+  def self.orderedUnhiddenReasons
+    Dropreason.where(ishidden: false).order("name asc")
+  end
+  
 end
