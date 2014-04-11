@@ -2,6 +2,7 @@ class DropreasonsController < ApplicationController
   # GET /dropreasons
   # GET /dropreasons.json
   def index
+    @curpg = :admintools
     @dropreasons = Dropreason.all
 
     respond_to do |format|
@@ -13,6 +14,7 @@ class DropreasonsController < ApplicationController
   # GET /dropreasons/1
   # GET /dropreasons/1.json
   def show
+    @curpg = :admintools
     @dropreason = Dropreason.find(params[:id])
 
     respond_to do |format|
@@ -24,6 +26,7 @@ class DropreasonsController < ApplicationController
   # GET /dropreasons/new
   # GET /dropreasons/new.json
   def new
+    @curpg = :admintools
     @dropreason = Dropreason.new
 
     respond_to do |format|
@@ -34,12 +37,14 @@ class DropreasonsController < ApplicationController
 
   # GET /dropreasons/1/edit
   def edit
+    @curpg = :admintools
     @dropreason = Dropreason.find(params[:id])
   end
 
   # POST /dropreasons
   # POST /dropreasons.json
   def create
+    @curpg = :admintools
     @dropreason = Dropreason.new(params[:dropreason])
 
     respond_to do |format|
@@ -56,6 +61,7 @@ class DropreasonsController < ApplicationController
   # PUT /dropreasons/1
   # PUT /dropreasons/1.json
   def update
+    @curpg = :admintools
     @dropreason = Dropreason.find(params[:id])
 
     respond_to do |format|
@@ -71,12 +77,14 @@ class DropreasonsController < ApplicationController
   
   
   def hide
+    @curpg = :admintools
     @dropreason = Dropreason.find(params[:id])
     @dropreason.update_attributes(:ishidden=>true)
     redirect_to :controller => "dropreasons", :action => "index"
   end
   
   def unhide
+    @curpg = :admintools
     @dropreason = Dropreason.find(params[:id])
     @dropreason.update_attributes(:ishidden=>false)
     redirect_to :controller => "dropreasons", :action => "index"

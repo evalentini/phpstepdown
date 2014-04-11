@@ -11,4 +11,13 @@ module ApplicationHelper
     
     return optionText
   end
+  
+  
+  def btnHlt(current_pg, thispage = :loginout)
+    if current_pg==thispage
+      "btn-success"
+    else
+      "btn-default"
+    end
+  end
 end

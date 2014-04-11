@@ -38,10 +38,12 @@
 	  <div class="row" style="margin-bottom:25px;">
 		<div class="col-xs-12" style="text-align: center;">
 			<div class="btn-group">
-				<a class="btn btn-default" href="/discharges">Patient List</a>
+				<a id="noshading" class="btn <%=btnHlt(@curpg, :discharges)%>" href="/discharges">Patient List</a>
 
 				  <div class="btn-group">
-				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				    <button type="button" 
+					id="noshading"
+					class="btn <%=btnHlt(@curpg, :reports)%> dropdown-toggle" data-toggle="dropdown">
 				      Reports
 				      <span class="caret"></span>
 				    </button>
@@ -55,7 +57,10 @@
 				<% if session[:usertype]=="admin" %>
 								
 				  <div class="btn-group">
-				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				    <button type="button" 
+							id="noshading"
+							class="btn <%=btnHlt(@curpg, :admintools)%>   
+							dropdown-toggle" data-toggle="dropdown">
 				      Admin Tools
 				      <span class="caret"></span>
 				    </button>
@@ -68,12 +73,12 @@
 				<% end %>
 				<% if session[:accesscode] %>
 					<% if session[:usertype]=="admin" %>
-						<a class="btn btn-success" href="/sessions/destroy">Logout: Administator </a>
+						<a id="noshading" class="btn <%=btnHlt(@curpg, :loginout)%>" href="/sessions/destroy">Logout: Administator </a>
 					<% else %>
-						<a class="btn btn-success" href="/sessions/destroy">Logout</a>
+						<a id="noshading" class="btn <%=btnHlt(@curpg, :loginout)%>" href="/sessions/destroy">Logout</a>
 					<% end %>
 				<% else %>
-					<a class="btn btn-success" href="/sessions/gate">Login</a>				
+					<a id="noshading" class="btn <%=btnHlt(@curpg, :loginout)%>" href="/sessions/gate">Login</a>				
 				<% end %>
 			</div>
 		</div>

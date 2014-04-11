@@ -4,6 +4,7 @@ class DischargesController < ApplicationController
   # GET /discharges
   # GET /discharges.json
   def index
+    @curpg = :discharges
     @discharges = Discharge.all
 
     respond_to do |format|
@@ -16,6 +17,7 @@ class DischargesController < ApplicationController
   # GET /discharges/1
   # GET /discharges/1.json
   def show
+    @curpg = :discharges
     @discharge = Discharge.find(params[:id])
 
     respond_to do |format|
@@ -27,6 +29,7 @@ class DischargesController < ApplicationController
   # GET /discharges/new
   # GET /discharges/new.json
   def new
+    @curpg = :discharges
     @discharge = Discharge.new
 
     respond_to do |format|
@@ -37,12 +40,14 @@ class DischargesController < ApplicationController
 
   # GET /discharges/1/edit
   def edit
+    @curpg = :discharges
     @discharge = Discharge.find(params[:id])
   end
 
   # POST /discharges
   # POST /discharges.json
   def create
+    @curpg = :discharges
     @discharge = Discharge.new(params[:discharge])
 
     respond_to do |format|
@@ -59,6 +64,7 @@ class DischargesController < ApplicationController
   # PUT /discharges/1
   # PUT /discharges/1.json
   def update
+    @curpg = :discharges
     @discharge = Discharge.find(params[:id])
 
     respond_to do |format|
@@ -85,6 +91,7 @@ class DischargesController < ApplicationController
   end
   
   def reasonsbyfacilityreport
+    @curpg = :reports
     @period=Date.today.strftime("%m-%Y") 
     @period=params[:yrmonth] unless params[:yrmonth].nil?
     @pattype=params[:patienttype]
@@ -99,6 +106,7 @@ class DischargesController < ApplicationController
   end
   
   def mordata
+    @curpg = :reports
     @loc=1
     @loc=params[:locfilter] unless params[:locfilter].nil?
   end

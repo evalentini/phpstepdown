@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
   skip_before_filter :confirm_gate, :only => :gate
 
   def gate
+    @curpg = :loginout
     if params[:accesscode].present?
       session[:accesscode]=params[:accesscode]
       session[:adminpassword]=params[:adminpassword]

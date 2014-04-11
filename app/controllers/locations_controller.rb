@@ -21,7 +21,7 @@ class LocationsController < ApplicationController
   
   def index
     @locations = Location.all
-
+    @curpg = :admintools
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @locations }
@@ -31,6 +31,7 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
+    @curpg = :admintools
     @location = Location.find(params[:id])
 
     respond_to do |format|
@@ -42,6 +43,7 @@ class LocationsController < ApplicationController
   # GET /locations/new
   # GET /locations/new.json
   def new
+    @curpg = :admintools
     @location = Location.new
 
     respond_to do |format|
@@ -52,12 +54,14 @@ class LocationsController < ApplicationController
 
   # GET /locations/1/edit
   def edit
+    @curpg = :admintools
     @location = Location.find(params[:id])
   end
 
   # POST /locations
   # POST /locations.json
   def create
+    @curpg = :admintools
     @location = Location.new(params[:location])
 
     respond_to do |format|
@@ -74,6 +78,7 @@ class LocationsController < ApplicationController
   # PUT /locations/1
   # PUT /locations/1.json
   def update
+    @curpg = :admintools
     @location = Location.find(params[:id])
 
     respond_to do |format|
@@ -88,12 +93,14 @@ class LocationsController < ApplicationController
   end
   
   def hide
+    @curpg = :admintools
     @location = Location.find(params[:id])
     @location.update_attributes(:ishidden=>true)
     redirect_to :controller => "locations", :action => "index"
   end
   
   def unhide
+    @curpg = :admintools
     @location = Location.find(params[:id])
     @location.update_attributes(:ishidden=>false)
     redirect_to :controller => "locations", :action => "index"
