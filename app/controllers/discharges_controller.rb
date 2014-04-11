@@ -9,6 +9,7 @@ class DischargesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @discharges }
+      format.csv { render text: @discharges.to_csv }
     end
   end
 
@@ -98,6 +99,8 @@ class DischargesController < ApplicationController
   end
   
   def mordata
+    @loc=1
+    @loc=params[:locfilter] unless params[:locfilter].nil?
   end
   
   def datadumpreport

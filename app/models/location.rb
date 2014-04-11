@@ -9,6 +9,14 @@ class Location < ActiveRecord::Base
     locationList
   end
   
+  def self.unhiddenLocHsh
+    locationList={}
+    Location.unhiddenLocations(-999).each do |loc|
+      locationList[loc[0]]=loc[1]
+    end
+    locationList
+  end
+  
   def self.unhiddenLocationsWithAll
     locationList=Location.unhiddenLocations
     locationList.unshift(["All", -999])

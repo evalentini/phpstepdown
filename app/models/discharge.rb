@@ -11,6 +11,16 @@ class Discharge < ActiveRecord::Base
   attr_accessible :active, :dropreason_id, :ipdays, :otherdetail, :phpvisits, :facility_id, :medikid, :ishidden, 
                   :ipdischargedate, :phpdischargedate, :phpstartdate
   
+  
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << column_names 
+      all.each do |discharge|
+        csv << discharge.attributes.values_at(*column_names)
+      end
+    end
+  end
+  
   def self.ipDayOptions
     ipDayOptionArray=[]
     ipDayOptionArray << ["0-was not IP patient", 0]
@@ -85,7 +95,6 @@ class Discharge < ActiveRecord::Base
    filterCrit="ishidden='f' and active='f'"  
     
    #create where criteria for type (default to drop outs)
-   logger.info "----#{patienttype}---"
    pattypeCrit="phpvisits=0 and ipdays>0"
    pattypeCrit="phpvisits>0" if patienttype=="discharges"
 
@@ -157,6 +166,67 @@ class Discharge < ActiveRecord::Base
     timePeriods
      
   end
+  
+  def self.morMonthRange
+    months=[]
+    startDate=Date.new(2013,1,1)
+    myDate=startDate
+    loop do 
+      months<<myDate
+      myDate=myDate.months_since(1)
+      break if myDate>Date.today
+    end
+    months
+  end
+  
+ def self.ipDischarges(tperiod, loc_id)
 
+   #filtercriteria applicable to all queries here
+   filterCrit="ishidden='f' and ipdays>0"  
+   periodCrit={:ipdischargedate=>tperiod.beginning_of_month..tperiod.end_of_month} 
+   locCrit="facility_id=#{loc_id}"
+   Discharge.where(filterCrit).where(periodCrit).where(locCrit)
+
+ end
+
+ def self.ipDischargesCount(tperiod, loc_id)
+   Discharge.ipDischarges(tperiod, loc_id).count
+ end
+ 
+ def self.phpStepdown(tperiod, loc_id)
+   Discharge.ipDischarges(tperiod, loc_id).where("active='t' or phpvisits>0")
+ end
+ 
+ def self.phpStepdownCount(tperiod, loc_id)
+   Discharge.phpStepdown(tperiod, loc_id).count
+ end
+ 
+ def self.phpDropouts(tperiod, loc_id)
+   Discharge.ipDischarges(tperiod, loc_id).where("active='f' and phpvisits=0")
+ end
+ 
+ def self.phpDropoutCount(tperiod, loc_id)
+   Discharge.phpDropouts(tperiod, loc_id).count
+ end
+
+ def self.phpDropoutWithReasonCount(reason_id, tperiod, loc_id)
+   Discharge.phpDropouts(tperiod, loc_id).where("dropreason_id=#{reason_id}").count
+ end
+ 
+ def self.nVisDschrgCt(numVisit, loc_id, tperiod)
+   filterCrit="ishidden='f' and active='f' and phpvisits=#{numVisit}"
+   locCrit="facility_id=#{loc_id}"
+   periodCrit={:phpdischargedate=>tperiod.beginning_of_month..tperiod.end_of_month}
+   Discharge.where(filterCrit).where(locCrit).where(periodCrit).count
+ end
+ 
+ 
+ def self.stepdownIpRangeCt(range, loc_id, tperiod)
+   Discharge.phpStepdown(tperiod, loc_id).where(ipdays: (range[0]..range[1])).count
+ end
+ 
+  def self.dropoutIpRangeCt(range, loc_id, tperiod)
+    Discharge.phpDropouts(tperiod, loc_id).where(ipdays: (range[0]..range[1])).count
+  end
   
 end

@@ -36,9 +36,11 @@
   
   <div class="form-group hidden" id="phpstartdateformgroup">
     <label for="phpstartdate" class="col-sm-4 control-label">PHP Start Date</label>
-    <div class="col-sm-8">
+    <div class="col-sm-4">
 	  <%= f.date_select :phpstartdate, {:order => [:month, :day, :year]}, {}   %>
     </div>
+	<div class="col-sm-4">
+	</div>
   </div>
   
   <div class="form-group">

@@ -1,1 +1,239 @@
-<p>MOR data</p>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well">
+			<form class="form-inline" role="form">
+				<%= token_tag(nil) %>
+				<div class="form-group">
+					<label for="locfilter">Select Facility ==> </label>
+					<%= select_tag(:locfilter, 
+									createOptList(Location.unhiddenLocHsh, @loc).html_safe,  
+									{:class=>"form-control"})%>
+				</div>
+				<button class="btn btn-default" type="submit">Get Report</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="row">
+	<div class="col-lg-12" style="text-align:center; font-size: 125%; font-weight: bold;">
+		MOR data for <%= Location.find(@loc).name %>
+	</div>
+</div>
+
+<div class="row" style="margin-top: 25px;">
+	<div class="col-lg-12">
+		<table class="table table-bordered">
+			<tr>
+				<td></td>
+				<% Discharge.morMonthRange.each do |currentmonth| %>
+				<td>
+					<%= currentmonth.strftime("%B %Y") %>
+				</td>
+				<% end %>
+			</tr>
+			<!--ip discharges-->
+			<tr>
+				<td>IP Discharges</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						<%=Discharge.ipDischargesCount(cmonth, @loc)%>
+					</td>
+				<% end %>
+			</tr>
+			<!--php stepdowns-->
+			<tr>
+				<td>PHP Stepdowns</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						<%=Discharge.phpStepdownCount(cmonth, @loc)%>
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--php dropouts-->
+			<tr>
+				<td>PHP Dropouts</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						<%=Discharge.phpDropoutCount(cmonth, @loc)%>
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--blank row-->
+			<tr>
+				<td>-</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						-
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--php dropouts again-->
+			<tr>
+				<td>PHP Dropouts</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						<%=Discharge.phpDropoutCount(cmonth, @loc)%>
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--drop outs by reason-->
+			<% Dropreason.orderedUnhiddenReasons.each do |reason| %>
+				<tr>
+					<td>&nbsp &nbsp &nbsp Due to <%= reason.name %></td>
+					<% Discharge.morMonthRange.each do |cmonth| %>
+						<td>
+							<%= Discharge.phpDropoutWithReasonCount(reason.id, cmonth, @loc) %>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+
+			<!--blank row-->
+			<tr>
+				<td>-</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						-
+					</td>
+				<% end %>
+			</tr>
+
+			<!--#php departs-->
+			<td>PHP Discharges</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						<%= Discharge.reasonCount(nil, @loc, cmonth.strftime("%m-%Y"),"discharges") %>
+					</td>
+				<% end %>
+			</tr>
+			
+			
+			<!--discharges by reason-->
+			<% Dropreason.orderedUnhiddenReasons.each do |reason| %>
+				<tr>
+					<td>&nbsp &nbsp &nbsp Due to <%= reason.name %></td>
+					<% Discharge.morMonthRange.each do |cmonth| %>
+						<td>
+							<%= 
+							Discharge.reasonCount(reason.id, @loc, cmonth.strftime("%m-%Y"),"discharges") 
+							%>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+
+
+			<!--blank row-->
+			<tr>
+				<td>-</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						-
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--#php departs-->
+			<td>PHP Discharges</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						<%= Discharge.reasonCount(nil, @loc, cmonth.strftime("%m-%Y"),"discharges") %>
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--discharges by # visits-->
+			<% (1..11).each do |n| %>
+				<tr>
+					<% if n==11%>
+						<td>&nbsp &nbsp &nbsp After <%= n %>+ visits</td>						
+					<% else %>
+						<td>&nbsp &nbsp &nbsp After <%= n %> visits</td>
+					<% end %>
+					<% Discharge.morMonthRange.each do |cmth| %>
+						<td>
+							<%= Discharge.nVisDschrgCt(n, @loc, cmth) %>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+
+			<!--blank row-->
+			<tr>
+				<td>-</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						-
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--php stepdowns-->
+			<tr>
+				<td>PHP Stepdowns</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						<%=Discharge.phpStepdownCount(cmonth, @loc)%>
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--php stepdowns by IP LOS Range-->
+			
+			<% [[0,3],[4,7],[8,11],[12,1000]].each do |range| %>
+				<tr>
+					<td> IP LOS <%=range[0]%>-<%=range[1]%></td>
+					<% Discharge.morMonthRange.each do |cmth| %>
+						<td>
+							<%= Discharge.stepdownIpRangeCt(range, @loc, cmth) %>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+			
+			<!--blank row-->
+			<tr>
+				<td>-</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						-
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--php dropouts-->
+			<tr>
+				<td>PHP Dropouts</td>
+				<% Discharge.morMonthRange.each do |cmonth| %>
+					<td>
+						<%=Discharge.phpDropoutCount(cmonth, @loc)%>
+					</td>
+				<% end %>
+			</tr>
+			
+			<!--php dropouts by IP LOS Range-->
+			
+			<% [[0,3],[4,7],[8,11],[12,1000]].each do |range| %>
+				<tr>
+					<td> IP LOS <%=range[0]%>-<%=range[1]%></td>
+					<% Discharge.morMonthRange.each do |cmth| %>
+						<td>
+							<%= Discharge.dropoutIpRangeCt(range, @loc, cmth) %>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+			
+
+
+		</table>
+	</div>
+</div>

@@ -2,6 +2,8 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+require 'csv'
+
 class String
   def convert_to_yn
     me=self.to_s
