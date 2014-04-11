@@ -87,6 +87,14 @@ class DischargesController < ApplicationController
     @period=Date.today.strftime("%m-%Y") 
     @period=params[:yrmonth] unless params[:yrmonth].nil?
     @pattype=params[:patienttype]
+    
+    periodstring=Date.new(@period.split('-')[1].to_i, @period.split('-')[0].to_i,1).strftime("%B-%Y")
+    
+    pattypelabel="Patients Dropping Out After IP Without Starting PHP (#{periodstring})"
+    pattypelabel="Patients Leaving PHP after Starting PHP (#{periodstring})" if @pattype=="discharges"
+  
+    @countLabel="Count of "+pattypelabel
+    @pctLabel="Percent of "+pattypelabel
   end
   
   def mordata

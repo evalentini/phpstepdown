@@ -6,7 +6,8 @@ class Discharge < ActiveRecord::Base
   validates_presence_of :medikid
   validates_uniqueness_of :medikid
   validates :ipdays, :numericality => {:only_integer => true}
-  
+  validates :phpvisits, :numericality => {:only_integer => true }
+
   attr_accessible :active, :dropreason_id, :ipdays, :otherdetail, :phpvisits, :facility_id, :medikid, :ishidden, 
                   :ipdischargedate, :phpdischargedate, :phpstartdate
   
@@ -110,6 +111,18 @@ class Discharge < ActiveRecord::Base
    
    Discharge.where(filterCrit).where(pattypeCrit).where(periodCrit).where(reasonCrit).where(locationCrit).count
   
+  end
+  
+  def self.reasonCountLocPct(r_id=nil, loc_id=nil, per=nil, ptype=nil)
+    numerator=Discharge.reasonCount(r_id, loc_id, per, ptype)
+    denominator=Discharge.reasonCount(nil, loc_id, per, ptype)
+    
+    if denominator>0
+      return (100*(numerator.to_f/denominator.to_f)).to_i.to_s+"%"
+    else
+      return ""
+    end
+    
   end
   
   #class method to return "red" or "green" or "white" based on whether reason over/underindexes versus average

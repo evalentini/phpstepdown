@@ -6,12 +6,17 @@ jQuery ->
 	
 	jQuery(document).ready ->
 		
+		
 		#show drop off options if patient has left PHP program 
 		inphp=jQuery("select#active").val()
 		jQuery("div#dropoffonlyinputs").removeClass("hidden") if inphp=="false"
 		
 		ipdays=jQuery("select#ipdays").val()
 		jQuery("div#ipdateformgroup").removeClass("hidden") if ipdays>0
+		#remove the option of 0 php visits if had 0 IP days 
+		window.zeroPhpOptionText=jQuery("select#phpvisits option[value='0']").text()
+		jQuery("select#phpvisits option[value='0']").remove() unless ipdays>0
+		
 		
 		#hide php date inputs if patient is dropout 
 		phpvisits=jQuery("select#phpvisits").val()
@@ -42,6 +47,9 @@ jQuery ->
 			ipdays=jQuery("select#ipdays").val()
 			jQuery("div#ipdateformgroup").removeClass("hidden")
 			jQuery("div#ipdateformgroup").addClass("hidden") unless ipdays>0
+			#remove the option of 0 php visits if had 0 IP days 
+			jQuery("select#phpvisits option[value='0']").remove()
+			jQuery("select#phpvisits").prepend(window.zeroPhpOptionText) if ipdays>0
 
 		jQuery("select#dropreason_id").change ->
 			dropreason=jQuery("select#dropreason_id option:selected").text()

@@ -1,5 +1,16 @@
 <%= form_for @discharge, :html => { :class => 'form-horizontal' } do |f| %>
 
+  <% if @discharge.errors.any? %>
+  <div class="alert alert-danger">
+  	<%= pluralize(@discharge.errors.count, "error") %> prohibited patient information from being saved:<br>
+	<ul>
+		<% @discharge.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+	</ul>
+  </div>
+  <% end %>
+
   <div class="form-group">
     <label for="medikid" class="col-sm-4 control-label">Patient Medik ID</label>
     <div class="col-sm-8">

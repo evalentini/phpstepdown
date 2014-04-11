@@ -22,6 +22,12 @@
 				<button class="btn btn-default" type="submit">Get Report</button>
 			</form>
 		</div>
+		<div class="row">
+			<div class="col-lg-12" style="text-align:center; font-size: 125%; font-weight: bold;">
+				<%=@countLabel %>
+			</div>
+		</div>
+		<div class="row"><div class="col-lg-12" style="margin-top: 15px;">
 		<table class="table table-bordered">
 			<tr>
 				<td></td>
@@ -50,6 +56,44 @@
 				</tr>
 			<% end %>
 		</table>
+	</div></div>
+	
+		<div class="row">
+			<div class="col-lg-12" style="text-align:center; font-size: 125%; font-weight: bold;">
+				<%=@pctLabel %>
+			</div>
+		</div>
+		<div class="row"><div class="col-lg-12" style="margin-top: 15px;">
+		<table class="table table-bordered">
+			<tr>
+				<td></td>
+				<% Dropreason.orderedUnhiddenReasons.each do |reason| %>
+				<td>
+					<%= reason.name %>
+				</td>
+				<% end %>
+			</tr>
+			<tr>
+				<td>Total</td>
+				<% Dropreason.orderedUnhiddenReasons.each do |reason| %>
+					<td>
+						<%= Discharge.reasonCountLocPct(reason.id, nil, @period, @pattype) %>
+					</td>
+				<% end %>
+			</tr>
+			<% Location.orderedUnhiddenLocations.each do |location| %>
+				<tr>
+					<td><%= location.name %></td>
+					<% Dropreason.orderedUnhiddenReasons.each do |reason| %>
+						<td bgcolor="<%= Discharge.extValIndex(reason.id, location.id,@period, @pattype) %>">
+							<%= Discharge.reasonCountLocPct(reason.id, location.id, @period, @pattype) %>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+		</table>
+	</div></div>
+	
 	</div>
 	<div class="col-xs-1"></div>
 </div>
