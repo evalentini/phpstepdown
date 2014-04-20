@@ -9,7 +9,7 @@ class Discharge < ActiveRecord::Base
   validates :phpvisits, :numericality => {:only_integer => true }
 
   attr_accessible :active, :dropreason_id, :ipdays, :otherdetail, :phpvisits, :facility_id, :medikid, :ishidden, 
-                  :ipdischargedate, :phpdischargedate, :phpstartdate
+                  :ipdischargedate, :phpdischargedate, :phpstartdate, :gender
   
   
   def self.to_csv
@@ -228,5 +228,11 @@ class Discharge < ActiveRecord::Base
   def self.dropoutIpRangeCt(range, loc_id, tperiod)
     Discharge.phpDropouts(tperiod, loc_id).where(ipdays: (range[0]..range[1])).count
   end
+  
+  def self.genderOptions
+    genderOptionArray=[["Female", "F"], ["Male", "M"]]
+    genderOptionArray
+  end
+  
   
 end

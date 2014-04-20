@@ -17,7 +17,13 @@
 	 <%= f.text_field :medikid, :class => 'form-control' %>
     </div>
   </div>  
-
+  
+  <div class="form-group">
+    <label for="gender" class="col-sm-4 control-label">Patient Gender</label>
+    <div class="col-sm-8">
+	 <%= f.select(:gender, Discharge.genderOptions, {},  {:class => 'form-control', :id=>'ipdays'}) %>
+    </div>
+  </div>  
 
   <div class="form-group">
     <label for="ipdays" class="col-sm-4 control-label">Inpatient Days</label>

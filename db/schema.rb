@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140410033206) do
+ActiveRecord::Schema.define(version: 20140420233744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20140410033206) do
     t.date     "ipdischargedate"
     t.date     "phpdischargedate"
     t.date     "phpstartdate"
+    t.string   "gender",           default: "M"
   end
 
   create_table "dropreasons", force: true do |t|

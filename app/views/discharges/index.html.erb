@@ -9,6 +9,7 @@
   <thead>
     <tr>
 	  <th>Medik ID</th>
+	  <th>Gender</th>
       <th>Inpatient Days</th>
       <th>Facility </th>
       <th>PHP Start Date</th>
@@ -20,6 +21,7 @@
     <% #Discharge.where(active: true, ishidden: false).order("created_at desc").each do |discharge| %>
       <tr>
 		<td><%= discharge.medikid %></td>
+		<td><%= discharge.gender %></td>
         <td><%= discharge.ipdays %></td>
         <td>
 			<%= Location.find(discharge.facility_id).name %>
@@ -48,7 +50,7 @@
 
 <br><br>
 
-<h2>PHP Dropouts</h2>
+<h2>Patients Not Stepping Down to PHPs</h2>
 
   <div class="alert alert-success">
 	  The patients in the list below have left IP treatment without starting PHP at Springstone.  Please review this list monthly for accuracy.  
@@ -59,7 +61,8 @@
     <thead>
       <tr>
         <th><%= model_class.human_attribute_name(:id) %></th>
-  	  <th>Medik ID</th>
+  	  	<th>Medik ID</th>
+	  	<th>Gender</th>
         <th>IP Days</th>
         <th>Reason Dropped</th>
         <th>Facility </th>
@@ -73,6 +76,7 @@
         <tr>
           <td><%= link_to discharge.id, discharge_path(discharge) %></td>
   		<td><%= discharge.medikid %></td>
+		<td><%= discharge.gender %></td>
           <td><%= discharge.ipdays %></td>
           <td><%= Dropreason.find(discharge.dropreason_id).name %></td>
           <td>
@@ -109,6 +113,7 @@
   <thead>
     <tr>
 	  <th>Medik ID</th>
+	  <th>Gender</th>
       <th>IP Days</th>
       <th># PHP Visits</th>
       <th>Reason Left PHP</th>
@@ -122,6 +127,7 @@
     <% #Discharge.where(active: false, ishidden: false).order("phpdischargedate desc").each do |discharge| %>
       <tr>
 		<td><%= discharge.medikid %></td>
+		<td><%= discharge.gender %></td>
         <td><%= discharge.ipdays %></td>
         <td><%= Discharge.phpVisitCodeLookup(discharge.phpvisits) %></td>
         <td><%= Dropreason.find(discharge.dropreason_id).name %></td>
@@ -156,6 +162,7 @@
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
 	  <th>Medik ID</th>
+	  <th>Gender</th>
       <th>Inpatient Days</th>
       <th># PHP Visits</th>
       <th>Reason Dropped/Left PHP</th>
@@ -169,6 +176,7 @@
       <tr>
         <td><%= link_to discharge.id, discharge_path(discharge) %></td>
 		<td><%= discharge.medikid %></td>
+		<td><%= discharge.gender %></td>
         <td><%= discharge.ipdays %></td>
         <td>n/a-unhide to show</td>
         <td>n/a-unhide to show</td>

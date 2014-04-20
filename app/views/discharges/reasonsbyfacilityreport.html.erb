@@ -14,7 +14,7 @@
 				<div class="form-group">
 					<label for="patienttype">&nbsp &nbsp Patient Type ==> </label> 
 					<%= select_tag(:patienttype, 
-									createOptList({"Left before starting PHP"=>"dropouts",
+									createOptList({"Did not step down to PHP"=>"dropouts",
 												   "Left after starting PHP"=>"discharges"}, params[:patienttype]
 												  ).html_safe,
 									{:class=>"form-control"}) %>
