@@ -46,7 +46,6 @@ jQuery ->
 
 		jQuery("select#ipdays").change ->
 			ipdays=parseInt(jQuery("select#ipdays").val())
-			
 			jQuery("div#ipdateformgroup").removeClass("hidden")
 			jQuery("div#ipdateformgroup").addClass("hidden") unless ipdays>0
 			#remove the option of 0 php visits if had 0 IP days 
