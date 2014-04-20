@@ -16,7 +16,6 @@ jQuery ->
 		#remove the option of 0 php visits if had 0 IP days 
 		window.zeroPhpOptionText=jQuery("select#phpvisits option[value='0']").text()
 		window.zeroPhpOptionText="<option value=0>"+window.zeroPhpOptionText+"</option>"
-		alert window.zeroPhpOptionText
 		jQuery("select#phpvisits option[value='0']").remove() unless ipdays>0
 		
 		
