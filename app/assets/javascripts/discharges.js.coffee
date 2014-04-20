@@ -11,10 +11,12 @@ jQuery ->
 		inphp=jQuery("select#active").val()
 		jQuery("div#dropoffonlyinputs").removeClass("hidden") if inphp=="false"
 		
-		ipdays=jQuery("select#ipdays").val()
+		ipdays=parseInt(jQuery("select#ipdays").val())
 		jQuery("div#ipdateformgroup").removeClass("hidden") if ipdays>0
 		#remove the option of 0 php visits if had 0 IP days 
 		window.zeroPhpOptionText=jQuery("select#phpvisits option[value='0']").text()
+		window.zeroPhpOptionText="<option value=0>"+window.zeroPhpOptionText+"</option>"
+		alert window.zeroPhpOptionText
 		jQuery("select#phpvisits option[value='0']").remove() unless ipdays>0
 		
 		
@@ -44,7 +46,8 @@ jQuery ->
 			jQuery('div#phpenddateformgroup').addClass("hidden") if phpvisits==0 and inphp=="false"
 
 		jQuery("select#ipdays").change ->
-			ipdays=jQuery("select#ipdays").val()
+			ipdays=parseInt(jQuery("select#ipdays").val())
+			
 			jQuery("div#ipdateformgroup").removeClass("hidden")
 			jQuery("div#ipdateformgroup").addClass("hidden") unless ipdays>0
 			#remove the option of 0 php visits if had 0 IP days 
